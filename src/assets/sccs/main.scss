@@ -1,0 +1,39 @@
+:root {
+    --main-blue: #1DA1F2;
+    --black: #0F1419;
+    --white: #fff;
+    --dark1: #17202A;
+    --dark2: #1C2733;
+    --dark3: #283340;
+    --dark4: #3A444C; 
+    --dark5: #5B7083;
+    --dark6: #8899A6;
+    --dark7: #EBEEF0;
+    --dark8: #F7F9FA;
+}
+
+@font-face {
+    font-family: 'SF Compact Display';
+    font-style: normal;
+    font-weight: 700;
+    src: url(../fonts/SF-Compact-Display-Bold.ttf);
+}
+@font-face {
+    font-family: 'SF Compact Display';
+    font-style: normal;
+    font-weight: 500;
+    src: url(../fonts/SF-Compact-Display-Medium.ttf);
+}
+@font-face {
+    font-family: 'SF Compact Display';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/SF-Compact-Display-Regular.ttf);
+}
+    
+body {
+    background-color: var(--dark1);
+    color: var(--white);
+    font-weight: 500;
+    font-family: 'SF Compact Display';
+}

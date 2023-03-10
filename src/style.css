@@ -1,0 +1,26 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #fff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  --main-blue: #1DA1F2;
+  --black: #0F1419;
+  --white: #fff;
+  --dark1: #17202A;
+  --dark2: #1C2733  ;
+  --dark3: #283340;
+  --dark4: #3A444C;
+  --dark5: #5B7083;
+  --dark6: #8899A6;
+  --dark7: #EBEEF0;
+  --dark8: #F7F9FA;
+}
