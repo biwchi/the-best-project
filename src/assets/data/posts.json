@@ -1,15 +1,26 @@
 [
     {
         "id": 0,
-        "user-name": "Sergey Bondar",
-        "user-id": "hodame",
-        "title": "art object.",
-        "date": "",
-        "media": "",
-        "likes": 0,
-        "retweet": 0,
-        "share": 0,
+        "userName": "Sergey Bondar",
+        "userId": "hodame",
+        "content": "art object.",
+        "date": "13.03.23",
+        "media": "https://cdn.wallpapersafari.com/44/9/SECwD9.jpg",
+        "likes": 103,
+        "retweet": 21,
+        "share": 54,
+        "commentsCount": 2,
         "comments": [
+            {
+                "userName": "baha",
+                "userId": "@kenjoozi",
+                "comment": "Сергей хороший пост ты ваще молодец"
+            },
+            {
+                "userName": "serga",
+                "userId": "@asel",
+                "comment": "like"
+            }
         ]
     }
 ]

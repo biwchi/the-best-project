@@ -1,6 +1,5 @@
 <script setup>
 import SideBar from "./components/SideBar.vue"
-import Home from "./pages/Home.vue";
 
 </script>
 
@@ -8,13 +7,11 @@ import Home from "./pages/Home.vue";
     <div class="body">
         <SideBar />
         <div></div>
-        <Home />
+        <RouterView />
     </div>
 </template>
 
 <style scoped lang="scss">
-
-
 .body {
     margin: 0 auto;
     max-width: 1210px;

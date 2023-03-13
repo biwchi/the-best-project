@@ -2,6 +2,7 @@
     display: flex;
     padding: 10px 15px;
     border-bottom: 1px var(--dark4) solid;
+    width: 100%;
 }
 .user-pic {
     width: 50px;
@@ -82,6 +83,20 @@
         line-height: 16px;
         background-color: transparent;
         font-weight: 500;
+    }
+    &-likes {
+        svg {
+            path {
+                fill: var(--dark6);
+            }
+        }
+        &.liked {
+            svg {
+                path {
+                    fill: var(--red);
+                }
+            }
+        }
     }
 }
 

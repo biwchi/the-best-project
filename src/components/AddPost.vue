@@ -1,22 +1,65 @@
 <script setup>
-const apiKey = "640c28517fa296c1fd91d22c" 
+import { ref } from "vue"
+import Posts from "../assets/data/posts.json"
+const postsData = ref(Posts)
+const postContent = ref("")
+const postMedia = ref("")
+const fileLoaded = ref('')
+let id = 0
+function loadFile(e) {
+    postMedia.value = e.target.files
+    let fileReader = new FileReader()
 
+    fileReader.onload = function(event) {
+        fileLoaded.value = event.target.result
+    }
+    fileReader.readAsDataURL(postMedia.value[0])
+}
+function addPost() {
+    const date = new Date
+    const month = "0" + (date.getUTCMonth() + 1)
+    const day = date.getUTCDate()
+    const year = date.getUTCFullYear()
+    const postData = day + '.' + month + "." + year
+    let newPost = {
+        "id": id++,
+        "userName": "Sergey Bondar",
+        "userId": "hodame",
+        "content": postContent.value,
+        "date": postData,
+        "media": fileLoaded.value,
+        "likes": 0,
+        "retweet": 0,
+        "share": 0,
+        "commentsCount": 0,
+        "comments": [
+        ]
+    }
+    if (postContent.value == "") {
+        window.alert('piska')
+    } else {
+        fileLoaded.value = ""
+        postContent.value = ""
+        postsData.value.unshift(newPost)
+    }
+}
 </script>
 
 <template>
     <div class="body">
         <img class="user-pic" src="../assets/images/user-pic.jfif" alt="">
         <div class="add-post">
-            <textarea placeholder="What's happening?" type="textarea" class="input"></textarea>
+            <textarea v-model="postContent" placeholder="What's happening?" type="textarea" class="input"></textarea>
+            <div v-show="fileLoaded" class="pre-view-media"><img :src="fileLoaded" alt=""></div>
             <div class="attachment">
                 <ul>
-                    <li><img src="../assets/images/feed/media.svg" alt=""></li>
+                    <li><input type="file" name="loadFile" id="loadMedia" @change="loadFile"><label for="loadMedia"><img src="../assets/images/feed/media.svg" alt=""></label></li>
                     <li><img src="../assets/images/feed/gif.svg" alt=""></li>
                     <li><img src="../assets/images/feed/pull.svg" alt=""></li>
                     <li><img src="../assets/images/feed/emoji.svg" alt=""></li>
                     <li><img src="../assets/images/feed/schedule.svg" alt=""></li>
                 </ul>
-                <button>Tweet</button>
+                <button @click="addPost">Tweet</button>
             </div>
         </div>
     </div>
@@ -51,6 +94,14 @@ const apiKey = "640c28517fa296c1fd91d22c"
         }
     }
 }
+.pre-view-media {
+    img {
+        max-width: 100px;
+        max-height: 70px;
+        border: 1px solid var(--dark4);
+        border-radius: 10px;
+    }
+}
 .attachment {
     display: flex;
     button {
@@ -70,7 +121,12 @@ const apiKey = "640c28517fa296c1fd91d22c"
         li {
             cursor: pointer;
             margin-right: 15px;
+            input {
+                opacity: 0;
+                width: 0px;
+            }
             img {
+                cursor: pointer;
                 width: 24px;
                 height: 24px;
             }

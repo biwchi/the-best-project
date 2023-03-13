@@ -1,6 +1,11 @@
 <script setup>
+import { ref } from "vue"
 import AddPost from "../components/AddPost.vue"
 import Post from "../components/Post.vue"
+import Posts from "../assets/data/posts.json"
+const postsData = ref(Posts)
+
+
 </script>
 
 <template>
@@ -11,8 +16,7 @@ import Post from "../components/Post.vue"
         </div>
         <AddPost/>
         <div class="decor"></div>
-        <Post />
-        <Post />
+        <Post v-for="(post, idx) in postsData" :key="idx" :postData="post"/>
     </div>
 </template>
 
