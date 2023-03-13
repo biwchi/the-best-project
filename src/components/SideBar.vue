@@ -9,7 +9,6 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
         </div>
         <ul class="sections">
             <RouterLink :to="{name: 'Home'}" custom v-slot="{navigate}">
-
                 <li @click="navigate">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.46 7.56999L12.357 2.11499C12.134 1.99499 11.867 1.99499 11.644 2.11499L1.54299 7.56999C1.17899 7.76699 1.04299 8.22199 1.23999 8.58699C1.37499 8.83699 1.63399 8.97999 1.89999 8.97999C2.01999 8.97999 2.14299 8.94999 2.25599 8.88999L3.07099 8.44999L4.69999 19.963C4.91399 21.178 6.00799 22.025 7.35799 22.025H16.64C17.992 22.025 19.085 21.177 19.303 19.938L20.929 8.44799L21.747 8.88999C22.111 9.08299 22.567 8.94999 22.764 8.58599C22.96 8.22299 22.824 7.76799 22.46 7.56999ZM17.822 19.703C17.715 20.309 17.119 20.525 16.642 20.525H7.35999C6.87999 20.525 6.28499 20.309 6.18199 19.727L4.47999 7.68999L12 3.62799L19.522 7.68799L17.822 19.703Z" fill="white"/>
@@ -95,12 +94,16 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
             </li>
             <button class="tweet-btn">Tweet</button>
         </ul>
-        <div class="profile">
-            <img src="../assets/images/user-pic.jfif" alt="" class="user-avatar">
-            <div class="user-info">
-                <div class="user-name">Sergey Bondar</div>
-                <div class="user-id">@hodame</div>
-            </div>
+        <div class="profile-elem">
+            <RouterLink to="profile" custom v-slot="{navigate}">
+                <div @click="navigate" class="profile-elem-link">
+                    <img src="../assets/images/user-pic.jfif" alt="" class="user-avatar">
+                    <div class="user-info">
+                        <div class="user-name">Sergey Bondar</div>
+                        <div class="user-id">@hodame</div>
+                    </div>
+                </div>
+            </RouterLink>
             <div class="dots"><img src="../assets/images/sidebar/dots-settings.svg" alt=""></div>
         </div>
     </div>
@@ -165,10 +168,14 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
     color: var(--white);
     padding: 15px 93px;
 }
-.profile {
+.profile-elem {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    &-link {
+        cursor: pointer;
+        display: flex;
+    }
 }
 .user-avatar {
     height: 40px;
@@ -183,6 +190,7 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
 .user-name {
     font-weight: 700;
     margin-bottom: 3px;
+    color: var(--white);
 }
 .user-id {
     letter-spacing: -0.017em;

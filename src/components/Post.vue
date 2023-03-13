@@ -42,9 +42,7 @@ const props = defineProps([
                     <span>{{ postData.share }}</span>
                 </li>
             </ul>
-            <Router-Link to="{name:}">
-                <button class="post-thread-btn">Show this thread</button>
-            </Router-Link>
+            <button class="post-thread-btn">Show this thread</button>
         </div>
     </div>
 </template>

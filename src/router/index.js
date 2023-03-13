@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
@@ -12,7 +12,7 @@ const router = createRouter({
       component: () => import("../pages/OpenedPost.vue"),
     },
     {
-      path: "/profile/:id",
+      path: "/profile",
       name: "profile",
       component: () => import("../pages/ProfileView.vue"),
       children: [
