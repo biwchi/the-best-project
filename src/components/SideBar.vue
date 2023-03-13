@@ -4,15 +4,13 @@
 <template>
     <div class="container">
         <div class="logo">
-            <img src="../assets/images/Vector.svg" alt="">
+            <img src="../assets/images/sidebar/logo.svg" alt="">
         </div>
         <ul class="sections">
             <li>
-                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M28.2249 9.1875L15.5937 2.37125C15.2224 2.17125 14.7762 2.17125 14.4062 2.37125L1.7812 9.1875C1.1737 9.5175 0.947447 10.275 1.27495 10.8825C1.49995 11.3013 1.9312 11.5388 2.37495 11.5388C2.57495 11.5388 2.77995 11.4913 2.9687 11.3888L3.8862 10.8938L5.8737 24.9563C6.1437 26.4738 7.5112 27.5338 9.1987 27.5338H20.8012C22.4887 27.5338 23.8562 26.4738 24.1287 24.9238L26.1137 10.8925L27.0349 11.39C27.6412 11.7188 28.3999 11.4925 28.7274 10.885C29.0562 10.2775 28.8274 9.51875 28.2224 9.19125L28.2249 9.1875ZM14.9999 19.2938C12.7562 19.2938 10.9374 17.475 10.9374 15.2313C10.9374 12.9875 12.7562 11.1688 14.9999 11.1688C17.2437 11.1688 19.0624 12.9875 19.0624 15.2313C19.0624 17.475 17.2437 19.2938 14.9999 19.2938Z"
-                        fill="#1DA1F2" />
-                    <rect x="0.5" y="0.5" width="29" height="29" stroke="black" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.46 7.56999L12.357 2.11499C12.134 1.99499 11.867 1.99499 11.644 2.11499L1.54299 7.56999C1.17899 7.76699 1.04299 8.22199 1.23999 8.58699C1.37499 8.83699 1.63399 8.97999 1.89999 8.97999C2.01999 8.97999 2.14299 8.94999 2.25599 8.88999L3.07099 8.44999L4.69999 19.963C4.91399 21.178 6.00799 22.025 7.35799 22.025H16.64C17.992 22.025 19.085 21.177 19.303 19.938L20.929 8.44799L21.747 8.88999C22.111 9.08299 22.567 8.94999 22.764 8.58599C22.96 8.22299 22.824 7.76799 22.46 7.56999ZM17.822 19.703C17.715 20.309 17.119 20.525 16.642 20.525H7.35999C6.87999 20.525 6.28499 20.309 6.18199 19.727L4.47999 7.68999L12 3.62799L19.522 7.68799L17.822 19.703Z" fill="white"/>
+                    <path d="M8.21997 12.184C8.21997 14.268 9.91497 15.964 12 15.964C14.085 15.964 15.78 14.268 15.78 12.184C15.78 10.1 14.085 8.40399 12 8.40399C9.91497 8.40399 8.21997 10.1 8.21997 12.184ZM14.28 12.184C14.28 13.442 13.258 14.464 12 14.464C10.742 14.464 9.71997 13.442 9.71997 12.184C9.71997 10.926 10.742 9.90399 12 9.90399C13.258 9.90399 14.28 10.926 14.28 12.184Z" fill="white"/>
                 </svg>
                 <span>
                     Home
@@ -94,18 +92,34 @@
                     More
                 </span>
             </li>
+            <button class="tweet-btn">Tweet</button>
         </ul>
-        <button class="tweet-btn">Tweet</button>
+        <div class="profile">
+            <img src="../assets/images/user-pic.jfif" alt="" class="user-avatar">
+            <div class="user-info">
+                <div class="user-name">Sergey Bondar</div>
+                <div class="user-id">@hodame</div>
+            </div>
+            <div class="dots"><img src="../assets/images/sidebar/dots-settings.svg" alt=""></div>
+        </div>
     </div>
 </template>
 
 <style scoped lang="scss">
+.container {
+    position: fixed;
+    padding-bottom: 20px;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
 .logo {
     padding-top: 10px;
 }
-
 .sections {
-    margin-top: 5px;
+    margin-top: 30px;
+    flex: 1 1 100%;
+    padding-left: 0;
     li {
         cursor: pointer;
         display: flex;
@@ -119,6 +133,7 @@
             margin-right: 20px;
             path {
                 transition: .2s ease;
+                fill: var(--white);
             }
         }
         span {
@@ -139,6 +154,7 @@
     }
 }
 .tweet-btn {
+    margin-top: 15px;
     cursor: pointer;
     background-color: var(--main-blue);
     font-size: 15;
@@ -148,4 +164,28 @@
     color: var(--white);
     padding: 15px 93px;
 }
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+.user-info {
+    flex: 1 1 100%;
+}
+.user-name {
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+.user-id {
+    letter-spacing: -0.017em;
+    color: var(--dark6);
+}
+
 </style>

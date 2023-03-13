@@ -1,6 +1,6 @@
 <script setup>
 import SideBar from "./components/SideBar.vue"
-
+import Home from "./pages/Home.vue";
 
 </script>
 
@@ -8,7 +8,7 @@ import SideBar from "./components/SideBar.vue"
     <div class="body">
         <SideBar />
         <div></div>
-        <div></div>
+        <Home />
     </div>
 </template>
 
@@ -19,6 +19,7 @@ import SideBar from "./components/SideBar.vue"
     margin: 0 auto;
     max-width: 1210px;
     padding: 0px 15px;
+    min-height: 100vh;
     display: grid; 
     grid-template-columns: 270px 1fr 350px
 }

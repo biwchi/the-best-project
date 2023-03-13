@@ -1,17 +1,6 @@
-:root {
-    --main-blue: #1DA1F2;
-    --black: #0F1419;
-    --white: #fff;
-    --dark1: #17202A;
-    --dark2: #1C2733;
-    --dark3: #283340;
-    --dark4: #3A444C; 
-    --dark5: #5B7083;
-    --dark6: #8899A6;
-    --dark7: #EBEEF0;
-    --dark8: #F7F9FA;
-}
-
+@use "./zerosettings";
+@use "./home";
+@use "./post";
 @font-face {
     font-family: 'SF Compact Display';
     font-style: normal;
@@ -30,8 +19,21 @@
     font-weight: 400;
     src: url(../fonts/SF-Compact-Display-Regular.ttf);
 }
+:root {
+    --main-blue: #1DA1F2;
+    --black: #0F1419;
+    --white: #fff;
+    --dark1: #17202A;
+    --dark2: #1C2733;
+    --dark3: #283340;
+    --dark4: #3A444C; 
+    --dark5: #5B7083;
+    --dark6: #8899A6;
+    --dark7: #EBEEF0;
+    --dark8: #F7F9FA;
+}
     
-body {
+#app {
     background-color: var(--dark1);
     color: var(--white);
     font-weight: 500;
