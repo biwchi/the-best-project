@@ -15,12 +15,12 @@
             </div>
         </div>
         <div class="profile-info">
-            <h2 class="profile-user-name"></h2>
-            <span class="profile-user-id"></span>
-            <div class="profile-spec"></div>
+            <h2 class="profile-user-name">Sergey Bondar</h2>
+            <span class="profile-user-id">@hodame</span>
+            <div class="profile-spec">Front-end developer</div>
             <ul class="profile-data">
-                <li>london</li>
-                <li>joined September 2022</li>
+                <li><img src="../assets/images/profile/Location.svg" alt=""><span>Landon</span></li>
+                <li><img src="../assets/images/profile/Calendar.svg" alt=""><span>joined September 2022</span></li>
             </ul>
             <div class="profile-stats">
                 <div class="profile-following">
@@ -33,8 +33,19 @@
                 </div>
             </div>
         </div>
+        <div class="profile-buttons">
+            <button class="prifle-btn-tweets active">Tweets</button>
+            <button class="prifle-btn-media">Media</button>
+        </div>
         <div class="profile-tweets">
             <Post v-for="(post, idx) in postsData" :key="idx" :postData="post"/>
+        </div>
+        <div class="edit-popup">
+            <div class="edit-popup-body">
+                <div class="edit-popup-close-btn"></div>
+                
+            </div>
+            
         </div>
     </div>
 </template>

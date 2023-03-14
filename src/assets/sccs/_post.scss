@@ -45,12 +45,13 @@
         line-height: 18px;
         font-weight: 500;
         margin-bottom: 10px;
+        white-space: normal;
     }
     &-media {
         border: 1px solid #3A444C;
         border-radius: 16px;
-        width: 510px;
-        height: 250px;
+        max-width: 510px;
+        max-height: 500px;
         overflow: hidden;
         margin: 10px 0;
         img {
@@ -84,19 +85,43 @@
         background-color: transparent;
         font-weight: 500;
     }
+    &-like {
+        width: 18px;
+        height: 18px;
+        transform: scale(3);
+        background: url("https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png");
+        background-position: left;
+        background-repeat:no-repeat;
+        background-size:2900%;
+    }
     &-likes {
         svg {
             path {
                 fill: var(--dark6);
             }
         }
+        &:hover {
+            div {
+                background-position: right;
+            }
+            span {
+                color: var(--red);
+            }
+        }
         &.liked {
-            svg {
-                path {
-                    fill: var(--red);
-                }
+            div {
+                animation: heart-burst .8s steps(28) 1;
+                background-position: right;
+            }
+            span {
+                color: var(--red);
             }
         }
     }
 }
+
+@keyframes heart-burst {
+    from {background-position:left;}
+    to { background-position:right;}
+  }
 

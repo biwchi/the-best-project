@@ -8,6 +8,7 @@ import SideBar from "./components/SideBar.vue"
         <SideBar />
         <div></div>
         <RouterView />
+        <div></div>
     </div>
 </template>
 
@@ -18,7 +19,7 @@ import SideBar from "./components/SideBar.vue"
     padding: 0px 15px;
     min-height: 100vh;
     display: grid; 
-    grid-template-columns: 270px 1fr 350px
+    grid-template-columns: 270px 600px 350px
 }
 
 </style>

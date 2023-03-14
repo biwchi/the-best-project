@@ -1,10 +1,12 @@
 <script setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import Posts from "../assets/data/posts.json"
 const postsData = ref(Posts)
 const postContent = ref("")
 const postMedia = ref("")
 const fileLoaded = ref('')
+const howFilled = ref(0)
+const maxWords = ref(false)
 let id = 0
 function loadFile(e) {
     postMedia.value = e.target.files
@@ -16,6 +18,7 @@ function loadFile(e) {
     fileReader.readAsDataURL(postMedia.value[0])
 }
 function addPost() {
+    const content = postContent.value
     const date = new Date
     const month = "0" + (date.getUTCMonth() + 1)
     const day = date.getUTCDate()
@@ -25,7 +28,7 @@ function addPost() {
         "id": id++,
         "userName": "Sergey Bondar",
         "userId": "hodame",
-        "content": postContent.value,
+        "content": content,
         "date": postData,
         "media": fileLoaded.value,
         "likes": 0,
@@ -43,6 +46,17 @@ function addPost() {
         postsData.value.unshift(newPost)
     }
 }
+
+watch( postContent, () => {
+    const maxPostlength = 200
+    if (postContent.value.length <= maxPostlength) {
+        maxWords.value = false
+        howFilled.value = postContent.value.length / 2
+    } else {
+        maxWords.value = true
+    }
+})
+
 </script>
 
 <template>
@@ -59,6 +73,10 @@ function addPost() {
                     <li><img src="../assets/images/feed/emoji.svg" alt=""></li>
                     <li><img src="../assets/images/feed/schedule.svg" alt=""></li>
                 </ul>
+                <div class="words-fill">
+                    <p>{{ postContent.length }}</p>
+                    <div><span :class="{filled: maxWords}" :style="{width: howFilled + '%'}"></span></div>
+                </div>
                 <button @click="addPost">Tweet</button>
             </div>
         </div>
@@ -129,6 +147,34 @@ function addPost() {
                 cursor: pointer;
                 width: 24px;
                 height: 24px;
+            }
+        }
+    }
+}
+.words-fill {
+    margin-right: 20px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    p {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--wihte);
+    }
+    div {
+        margin-left: 5px;
+        position: relative;
+        width: 100px;
+        height: 2px;
+        background-color: var(--dark4);
+        span {
+            position: absolute;
+            display: inline-block;
+            width: 0%;
+            height: 2px;
+            background-color: var(--main-blue);
+            &.filled {
+                background-color: var(--red);
             }
         }
     }

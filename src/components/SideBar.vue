@@ -8,16 +8,20 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
             <img src="../assets/images/sidebar/logo.svg" alt="">
         </div>
         <ul class="sections">
-            <RouterLink :to="{name: 'Home'}" custom v-slot="{navigate}">
+            <RouterLink :to="{ name: 'Home' }" custom v-slot="{ navigate }">
                 <li @click="navigate">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22.46 7.56999L12.357 2.11499C12.134 1.99499 11.867 1.99499 11.644 2.11499L1.54299 7.56999C1.17899 7.76699 1.04299 8.22199 1.23999 8.58699C1.37499 8.83699 1.63399 8.97999 1.89999 8.97999C2.01999 8.97999 2.14299 8.94999 2.25599 8.88999L3.07099 8.44999L4.69999 19.963C4.91399 21.178 6.00799 22.025 7.35799 22.025H16.64C17.992 22.025 19.085 21.177 19.303 19.938L20.929 8.44799L21.747 8.88999C22.111 9.08299 22.567 8.94999 22.764 8.58599C22.96 8.22299 22.824 7.76799 22.46 7.56999ZM17.822 19.703C17.715 20.309 17.119 20.525 16.642 20.525H7.35999C6.87999 20.525 6.28499 20.309 6.18199 19.727L4.47999 7.68999L12 3.62799L19.522 7.68799L17.822 19.703Z" fill="white"/>
-                    <path d="M8.21997 12.184C8.21997 14.268 9.91497 15.964 12 15.964C14.085 15.964 15.78 14.268 15.78 12.184C15.78 10.1 14.085 8.40399 12 8.40399C9.91497 8.40399 8.21997 10.1 8.21997 12.184ZM14.28 12.184C14.28 13.442 13.258 14.464 12 14.464C10.742 14.464 9.71997 13.442 9.71997 12.184C9.71997 10.926 10.742 9.90399 12 9.90399C13.258 9.90399 14.28 10.926 14.28 12.184Z" fill="white"/>
-                </svg>
-                <span>
-                    Home
-                </span>
-            </li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22.46 7.56999L12.357 2.11499C12.134 1.99499 11.867 1.99499 11.644 2.11499L1.54299 7.56999C1.17899 7.76699 1.04299 8.22199 1.23999 8.58699C1.37499 8.83699 1.63399 8.97999 1.89999 8.97999C2.01999 8.97999 2.14299 8.94999 2.25599 8.88999L3.07099 8.44999L4.69999 19.963C4.91399 21.178 6.00799 22.025 7.35799 22.025H16.64C17.992 22.025 19.085 21.177 19.303 19.938L20.929 8.44799L21.747 8.88999C22.111 9.08299 22.567 8.94999 22.764 8.58599C22.96 8.22299 22.824 7.76799 22.46 7.56999ZM17.822 19.703C17.715 20.309 17.119 20.525 16.642 20.525H7.35999C6.87999 20.525 6.28499 20.309 6.18199 19.727L4.47999 7.68999L12 3.62799L19.522 7.68799L17.822 19.703Z"
+                            fill="white" />
+                        <path
+                            d="M8.21997 12.184C8.21997 14.268 9.91497 15.964 12 15.964C14.085 15.964 15.78 14.268 15.78 12.184C15.78 10.1 14.085 8.40399 12 8.40399C9.91497 8.40399 8.21997 10.1 8.21997 12.184ZM14.28 12.184C14.28 13.442 13.258 14.464 12 14.464C10.742 14.464 9.71997 13.442 9.71997 12.184C9.71997 10.926 10.742 9.90399 12 9.90399C13.258 9.90399 14.28 10.926 14.28 12.184Z"
+                            fill="white" />
+                    </svg>
+                    <span>
+                        Home
+                    </span>
+                </li>
 
             </RouterLink>
             <li>
@@ -69,16 +73,20 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
                     Lists
                 </span>
             </li>
-            <li>
-                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M15 14.77C16.6938 14.77 18.59 14.5825 19.8 13.2C20.8175 12.0375 21.1475 10.24 20.8075 7.71001C20.3325 4.17876 18.1613 2.07001 15 2.07001C11.8388 2.07001 9.6675 4.17876 9.1925 7.71251C8.8525 10.24 9.1825 12.0375 10.2 13.2C11.41 14.5838 13.3063 14.77 15 14.77ZM11.05 7.96001C11.2525 6.46001 12.0338 3.94501 15 3.94501C17.9663 3.94501 18.7475 6.46126 18.95 7.96001C19.2088 9.89751 19.0213 11.2438 18.3875 11.9663C17.8188 12.6163 16.805 12.895 15 12.895C13.195 12.895 12.1813 12.6163 11.6125 11.9663C10.9788 11.2438 10.7913 9.89626 11.05 7.96001ZM25.35 24.045C24.2538 19.6375 19.9975 16.5575 15 16.5575C10.0025 16.5575 5.74625 19.6375 4.65 24.045C4.435 24.91 4.615 25.795 5.14375 26.47C5.65375 27.12 6.44375 27.495 7.31 27.495H22.69C23.5563 27.495 24.3463 27.12 24.8563 26.47C25.3863 25.795 25.565 24.9113 25.3488 24.045H25.35ZM23.38 25.315C23.2225 25.515 22.985 25.6225 22.69 25.6225H7.31C7.01625 25.6225 6.7775 25.5163 6.62 25.315C6.44875 25.0975 6.395 24.8 6.47 24.4975C7.3575 20.9288 10.8663 18.435 15 18.435C19.1338 18.435 22.6425 20.9275 23.53 24.4975C23.605 24.8 23.5513 25.0975 23.38 25.315Z"
-                        fill="white" />
-                </svg>
-                <span>
-                    Profile
-                </span>
-            </li>
+            <RouterLink to="profile" custom v-slot="{ navigate }">
+                <div @click="navigate" class="profile-elem-link">
+                    <li>
+                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15 14.77C16.6938 14.77 18.59 14.5825 19.8 13.2C20.8175 12.0375 21.1475 10.24 20.8075 7.71001C20.3325 4.17876 18.1613 2.07001 15 2.07001C11.8388 2.07001 9.6675 4.17876 9.1925 7.71251C8.8525 10.24 9.1825 12.0375 10.2 13.2C11.41 14.5838 13.3063 14.77 15 14.77ZM11.05 7.96001C11.2525 6.46001 12.0338 3.94501 15 3.94501C17.9663 3.94501 18.7475 6.46126 18.95 7.96001C19.2088 9.89751 19.0213 11.2438 18.3875 11.9663C17.8188 12.6163 16.805 12.895 15 12.895C13.195 12.895 12.1813 12.6163 11.6125 11.9663C10.9788 11.2438 10.7913 9.89626 11.05 7.96001ZM25.35 24.045C24.2538 19.6375 19.9975 16.5575 15 16.5575C10.0025 16.5575 5.74625 19.6375 4.65 24.045C4.435 24.91 4.615 25.795 5.14375 26.47C5.65375 27.12 6.44375 27.495 7.31 27.495H22.69C23.5563 27.495 24.3463 27.12 24.8563 26.47C25.3863 25.795 25.565 24.9113 25.3488 24.045H25.35ZM23.38 25.315C23.2225 25.515 22.985 25.6225 22.69 25.6225H7.31C7.01625 25.6225 6.7775 25.5163 6.62 25.315C6.44875 25.0975 6.395 24.8 6.47 24.4975C7.3575 20.9288 10.8663 18.435 15 18.435C19.1338 18.435 22.6425 20.9275 23.53 24.4975C23.605 24.8 23.5513 25.0975 23.38 25.315Z"
+                                fill="white" />
+                        </svg>
+                        <span>
+                            Profile
+                        </span>
+                    </li>
+                </div>
+            </RouterLink>
             <li>
                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -95,7 +103,7 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
             <button class="tweet-btn">Tweet</button>
         </ul>
         <div class="profile-elem">
-            <RouterLink to="profile" custom v-slot="{navigate}">
+            <RouterLink to="profile" custom v-slot="{ navigate }">
                 <div @click="navigate" class="profile-elem-link">
                     <img src="../assets/images/user-pic.jfif" alt="" class="user-avatar">
                     <div class="user-info">
@@ -117,13 +125,20 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
     height: 100%;
     flex-direction: column;
 }
+
 .logo {
     padding-top: 10px;
 }
+
 .sections {
     margin-top: 30px;
     flex: 1 1 100%;
     padding-left: 0;
+    div {
+        &.profile-elem-link {
+            max-height: 30px;
+        }
+    }
     li {
         cursor: pointer;
         display: flex;
@@ -131,32 +146,38 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
         list-style-type: none;
         margin: 15px 0;
         width: 100%;
+        max-height: 30px;
         svg {
             width: 30px;
             height: 30px;
             margin-right: 20px;
+
             path {
                 transition: .2s ease;
                 fill: var(--white);
             }
         }
+
         span {
             transition: .2s ease;
             font-size: 19px;
             font-weight: 700;
         }
+
         &:hover {
             svg {
                 path {
                     fill: var(--main-blue);
                 }
             }
+
             span {
                 color: var(--main-blue);
             }
         }
     }
 }
+
 .tweet-btn {
     margin-top: 15px;
     cursor: pointer;
@@ -168,15 +189,18 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
     color: var(--white);
     padding: 15px 93px;
 }
+
 .profile-elem {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     &-link {
         cursor: pointer;
         display: flex;
     }
 }
+
 .user-avatar {
     height: 40px;
     width: 40px;
@@ -184,17 +208,18 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
     margin-right: 10px;
     object-fit: cover;
 }
+
 .user-info {
     flex: 1 1 100%;
 }
+
 .user-name {
     font-weight: 700;
     margin-bottom: 3px;
     color: var(--white);
 }
+
 .user-id {
     letter-spacing: -0.017em;
     color: var(--dark6);
-}
-
-</style>
+}</style>
