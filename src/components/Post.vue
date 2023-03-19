@@ -1,16 +1,23 @@
 <script setup>
 import { ref, } from "vue"
 import { db } from "../firebase/config"
-import { doc, deleteDoc } from "firebase/firestore";
+import { deleteDoc, getDocs, collection, doc, updateDoc } from "firebase/firestore";
 const postLiked = ref(false)
 const postSettingsShow = ref(false)
 const props = defineProps([
-    "postData"
+    "postData",
+    "userProfile"
 ])
-
 async function deletePost(id) {
-    await deleteDoc(doc(db, "posts", id))
-    postSettingsShow.value = false
+    const users = await getDocs(collection(db, "users"))
+    users.forEach(document => {
+        deleteDoc(doc(db, "users", document.id, "posts", id))
+        postSettingsShow.value = false
+        updateDoc(doc(db, "users", document.id), {
+                userPostsCount: document.data().userPostsCount - 1
+            })
+    });
+
 }
 
 
@@ -18,18 +25,24 @@ async function deletePost(id) {
 
 <template>
     <div class="post-body">
-        <img class="user-pic" src="../assets/images/user-pic.jfif" alt="">
+        <img class="user-pic" :src="userProfile.userAvatar" alt="">
         <div class="post">
             <div @click="postSettingsShow = !postSettingsShow" class="post-settings">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 10C6.10457 10 7 10.8954 7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10Z" fill="#000000"/>
-                    <path d="M12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10Z" fill="#000000"/>
-                    <path d="M21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14C20.1046 14 21 13.1046 21 12Z" fill="#000000"/>
+                    <path
+                        d="M5 10C6.10457 10 7 10.8954 7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12C3 10.8954 3.89543 10 5 10Z"
+                        fill="#000000" />
+                    <path
+                        d="M12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10Z"
+                        fill="#000000" />
+                    <path
+                        d="M21 12C21 10.8954 20.1046 10 19 10C17.8954 10 17 10.8954 17 12C17 13.1046 17.8954 14 19 14C20.1046 14 21 13.1046 21 12Z"
+                        fill="#000000" />
                 </svg>
             </div>
             <ul v-show="postSettingsShow" class="post-options">
-                    <li @click="deletePost(postData.id)">Delete</li>
-                    <li>Edit</li>
+                <li @click="deletePost(postData.id)">Delete</li>
+                <li>Edit</li>
             </ul>
             <div class="post-data">
                 <div class="post-user-name">{{ postData.userName }}</div>
@@ -69,5 +82,4 @@ async function deletePost(id) {
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
-}
-</style>
+}</style>

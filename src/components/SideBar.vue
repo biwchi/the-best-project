@@ -1,5 +1,8 @@
 <script setup>
 import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
+const props = defineProps([
+    "userProfile"
+])
 </script>
 
 <template>
@@ -105,10 +108,10 @@ import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
         <div class="profile-elem">
             <RouterLink to="profile" custom v-slot="{ navigate }">
                 <div @click="navigate" class="profile-elem-link">
-                    <img src="../assets/images/user-pic.jfif" alt="" class="user-avatar">
+                    <img :src="userProfile.userAvatar" alt="" class="user-avatar">
                     <div class="user-info">
-                        <div class="user-name">Sergey Bondar</div>
-                        <div class="user-id">@hodame</div>
+                        <div class="user-name">{{ userProfile.userName }}</div>
+                        <div class="user-id">@{{ userProfile.userId }}</div>
                     </div>
                 </div>
             </RouterLink>

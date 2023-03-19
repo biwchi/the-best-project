@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue"
 import { db } from "../firebase/config"
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, getDocs, doc } from "firebase/firestore";
 const postContent = ref("")
 const postMedia = ref("")
 const fileLoaded = ref('')
@@ -9,7 +9,9 @@ const howFilled = ref(0)
 const maxWords = ref(false)
 const maxWordsWarning = ref(false)
 const maxPostlength = 200
-
+const props = defineProps([
+    "userProfile"
+])
 function loadFile(e) {
     postMedia.value = e.target.files
     let fileReader = new FileReader()
@@ -35,20 +37,25 @@ async function addPost() {
     else {
         maxWordsWarning.value = false
         postContent.value = ""
-        console.log(fileLoaded.value)
-        await addDoc(collection(db, "posts"), {
-            "userName": "Sergey Bondar",
-            "userId": "hodame",
-            "content": content,
-            "date": postData,
-            "media": fileLoaded.value,
-            "likes": 0,
-            "retweet": 0,
-            "share": 0,
-            "commentsCount": 0,
-            "comments": [
-            ]
-        })
+        const users = await getDocs(collection(db, "users"))
+        users.forEach(document => {
+            addDoc(collection(db, "users", document.id, "posts"), {
+                "userName": document.data().userName,
+                "userId": document.data().userId,
+                "content": content,
+                "date": postData,
+                "media": fileLoaded.value,
+                "likes": 0,
+                "retweet": 0,
+                "share": 0,
+                "commentsCount": 0,
+                "comments": [
+                ]
+            })
+            updateDoc(doc(db, "users", document.id), {
+                userPostsCount: document.data().userPostsCount + 1
+            })
+        });
         fileLoaded.value = ""
     } 
 }
@@ -67,7 +74,7 @@ watch( postContent, () => {
 
 <template>
     <div class="body">
-        <img class="user-pic" src="../assets/images/user-pic.jfif" alt="">
+        <img class="user-pic" :src="userProfile.userAvatar" alt="">
         <div class="add-post">
             <textarea v-model="postContent" placeholder="What's happening?" type="textarea" class="input"></textarea>
             <div v-show="fileLoaded" class="pre-view-media"><img :src="fileLoaded" alt=""></div>

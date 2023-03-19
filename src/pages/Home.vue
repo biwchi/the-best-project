@@ -1,32 +1,52 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { db } from "../firebase/config"
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import AddPost from "../components/AddPost.vue"
 import Post from "../components/Post.vue"
 const posts = ref([])
-
+const userProfile = ref({})
 onMounted(async () => {
-    onSnapshot(collection(db, "posts"), (querySnapshot) => {
-        const fbposts = []
-        querySnapshot.forEach((doc) => {
-            const post = {
-                "id": doc.id,
-                "userName": doc.data().userName,
-                "userId": doc.data().userId,
-                "content": doc.data().content,
-                "date": doc.data().date,
-                "media": doc.data().media,
-                "likes":doc.data().likes,
-                "retweet": doc.data().retweet,
-                "share": doc.data().share,
-                "commentsCount": doc.data().commentsCount,
-                "comments": doc.data().comments
-            }
-            fbposts.push(post)
+    const users = await getDocs(collection(db, "users"))
+    users.forEach(doc => {
+        onSnapshot(collection(db, "users", doc.id, "posts"), (querySnapshot) => {
+            const fbposts = []
+            querySnapshot.forEach((doc) => {
+                const post = {
+                    "id": doc.id,
+                    "userName": doc.data().userName,
+                    "userId": doc.data().userId,
+                    "content": doc.data().content,
+                    "date": doc.data().date,
+                    "media": doc.data().media,
+                    "likes": doc.data().likes,
+                    "retweet": doc.data().retweet,
+                    "share": doc.data().share,
+                    "commentsCount": doc.data().commentsCount,
+                    "comments": doc.data().comments
+                }
+                fbposts.push(post)
+            })
+            posts.value = fbposts
         })
-        posts.value = fbposts
-    })
+        onSnapshot(collection(db, "users"), (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const user = {
+                    "id": doc.id,
+                    "userName": doc.data().userName,
+                    "userId": doc.data().userId,
+                    "userAvatar": doc.data().userAvatar,
+                    "userProfileBackground": doc.data().userProfileBackground,
+                    "userLocation": doc.data().userLocation,
+                    "userFollowing": doc.data().userFollowing,
+                    "userFollowers": doc.data().userFollowers,
+                    "userJoinDate": doc.data().userJoinDate,
+                    "userPostsCount": doc.data().userPostsCount,
+                }
+                userProfile.value = user
+            })
+        })
+    });
 })
 
 </script>
@@ -37,9 +57,9 @@ onMounted(async () => {
             <h2>Home</h2>
             <img src="../assets/images/feed/stars.svg" alt="">
         </div>
-        <AddPost />
+        <AddPost :userProfile="userProfile" />
         <div class="decor"></div>
-        <Post v-for="(post, idx) in posts" :key="idx" :postData="post" />
+        <Post v-for="(post, idx) in posts" :userProfile="userProfile" :key="idx" :postData="post" />
     </div>
 </template>
 
