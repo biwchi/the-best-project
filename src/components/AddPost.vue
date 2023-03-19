@@ -1,13 +1,15 @@
 <script setup>
 import { ref, watch } from "vue"
-import Posts from "../assets/data/posts.json"
-const postsData = ref(Posts)
+import { db } from "../firebase/config"
+import { collection, addDoc } from "firebase/firestore";
 const postContent = ref("")
 const postMedia = ref("")
 const fileLoaded = ref('')
 const howFilled = ref(0)
 const maxWords = ref(false)
-let id = 0
+const maxWordsWarning = ref(false)
+const maxPostlength = 200
+
 function loadFile(e) {
     postMedia.value = e.target.files
     let fileReader = new FileReader()
@@ -17,41 +19,45 @@ function loadFile(e) {
     }
     fileReader.readAsDataURL(postMedia.value[0])
 }
-function addPost() {
+async function addPost() {
     const content = postContent.value
     const date = new Date
     const month = "0" + (date.getUTCMonth() + 1)
     const day = date.getUTCDate()
     const year = date.getUTCFullYear()
     const postData = day + '.' + month + "." + year
-    let newPost = {
-        "id": id++,
-        "userName": "Sergey Bondar",
-        "userId": "hodame",
-        "content": content,
-        "date": postData,
-        "media": fileLoaded.value,
-        "likes": 0,
-        "retweet": 0,
-        "share": 0,
-        "commentsCount": 0,
-        "comments": [
-        ]
-    }
     if (postContent.value == "") {
         window.alert('piska')
-    } else {
-        fileLoaded.value = ""
+    } 
+    else if (postContent.value.length > maxPostlength) {
+        maxWordsWarning.value = true
+    } 
+    else {
+        maxWordsWarning.value = false
         postContent.value = ""
-        postsData.value.unshift(newPost)
-    }
+        console.log(fileLoaded.value)
+        await addDoc(collection(db, "posts"), {
+            "userName": "Sergey Bondar",
+            "userId": "hodame",
+            "content": content,
+            "date": postData,
+            "media": fileLoaded.value,
+            "likes": 0,
+            "retweet": 0,
+            "share": 0,
+            "commentsCount": 0,
+            "comments": [
+            ]
+        })
+        fileLoaded.value = ""
+    } 
 }
 
 watch( postContent, () => {
-    const maxPostlength = 200
     if (postContent.value.length <= maxPostlength) {
         maxWords.value = false
-        howFilled.value = postContent.value.length / 2
+        maxWordsWarning.value = false
+        howFilled.value = postContent.value.length / (maxPostlength / 100)
     } else {
         maxWords.value = true
     }
@@ -74,6 +80,7 @@ watch( postContent, () => {
                     <li><img src="../assets/images/feed/schedule.svg" alt=""></li>
                 </ul>
                 <div class="words-fill">
+                    <Transition><div v-show="maxWordsWarning" class="max-words-warning"><p>You exceed words limited</p></div></Transition>
                     <p>{{ postContent.length }}</p>
                     <div><span :class="{filled: maxWords}" :style="{width: howFilled + '%'}"></span></div>
                 </div>
@@ -106,6 +113,7 @@ watch( postContent, () => {
         height: 70px;
         font-size: 20px;
         background-color: transparent;
+        white-space: pre-wrap;
         ::placeholder {
             font-size: 20px;
             color: var(--dark6);
@@ -153,8 +161,8 @@ watch( postContent, () => {
 }
 .words-fill {
     margin-right: 20px;
-    width: 100px;
     display: flex;
+    position: relative;
     align-items: center;
     p {
         font-size: 14px;
@@ -162,21 +170,37 @@ watch( postContent, () => {
         color: var(--wihte);
     }
     div {
-        margin-left: 5px;
-        position: relative;
-        width: 100px;
-        height: 2px;
-        background-color: var(--dark4);
-        span {
-            position: absolute;
-            display: inline-block;
-            width: 0%;
+        &:last-child {
+            margin-left: 5px;
+            position: relative;
+            width: 100px;
             height: 2px;
-            background-color: var(--main-blue);
-            &.filled {
-                background-color: var(--red);
+            background-color: var(--dark4);
+            span {
+                position: absolute;
+                display: inline-block;
+                width: 0%;
+                height: 2px;
+                background-color: var(--main-blue);
+                &.filled {
+                    background-color: var(--red);
+                }
             }
         }
+    }
+}
+.max-words-warning {
+    left: 50%;
+    bottom: -30px;
+    background-color: var(--dark3);
+    transform: translateX(-50%);
+    position: absolute;
+    padding: 10px;
+    border-radius: 20px;
+    p {
+        white-space: nowrap;
+        font-size: 13px;
+
     }
 }
 </style>

@@ -12,8 +12,38 @@
 }
 
 .post {
+    flex: 1 1 100%;
     margin-left: 10px;
     font-size: 15px;
+    position: relative;
+    &-settings {
+        top: -5px;
+        right: 0;
+        position: absolute;
+        cursor: pointer;
+        width: 30px;
+        svg {
+            path {
+                fill: var(--white);
+            }
+        }
+    }
+    &-options {
+        right: -5px;
+        top: 25px;
+        position: absolute;
+        background-color: var(--main-blue);
+        padding: 10px;
+        border-radius: 10px;
+        list-style-type: none;
+        z-index: 10;
+        li {
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 5px 0px;
+        }
+    }
     &-data {
         display: flex;
         align-items: center;
@@ -98,14 +128,6 @@
         svg {
             path {
                 fill: var(--dark6);
-            }
-        }
-        &:hover {
-            div {
-                background-position: right;
-            }
-            span {
-                color: var(--red);
             }
         }
         &.liked {
