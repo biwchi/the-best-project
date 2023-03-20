@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { db } from "../firebase/config"
-import { collection, onSnapshot, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, getDocs, orderBy, query } from "firebase/firestore";
 import AddPost from "../components/AddPost.vue"
 import Post from "../components/Post.vue"
 const posts = ref([])
@@ -23,11 +23,12 @@ onMounted(async () => {
                     "retweet": doc.data().retweet,
                     "share": doc.data().share,
                     "commentsCount": doc.data().commentsCount,
-                    "comments": doc.data().comments
+                    "comments": doc.data().comments,
+                    "postLifeTime": doc.data().postLifeTime
                 }
                 fbposts.push(post)
             })
-            posts.value = fbposts
+            posts.value = fbposts.sort((post, post1) => post1.postLifeTime - post.postLifeTime, 0)
         })
         onSnapshot(collection(db, "users"), (querySnapshot) => {
             querySnapshot.forEach((doc) => {

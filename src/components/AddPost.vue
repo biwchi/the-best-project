@@ -50,7 +50,8 @@ async function addPost() {
                 "share": 0,
                 "commentsCount": 0,
                 "comments": [
-                ]
+                ],
+                "postLifeTime": Number(new Date())
             })
             updateDoc(doc(db, "users", document.id), {
                 userPostsCount: document.data().userPostsCount + 1

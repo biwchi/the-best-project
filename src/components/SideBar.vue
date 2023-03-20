@@ -76,7 +76,7 @@ const props = defineProps([
                     Lists
                 </span>
             </li>
-            <RouterLink to="profile" custom v-slot="{ navigate }">
+            <RouterLink :to="{ name: 'profile', params: { userId: userProfile.id || '0' } }" custom v-slot="{ navigate }">
                 <div @click="navigate" class="profile-elem-link">
                     <li>
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,9 +106,9 @@ const props = defineProps([
             <button class="tweet-btn">Tweet</button>
         </ul>
         <div class="profile-elem">
-            <RouterLink to="profile" custom v-slot="{ navigate }">
+            <RouterLink :to="{ name: 'profile', params: { userId: userProfile.id || '0' } }" custom v-slot="{ navigate }">
                 <div @click="navigate" class="profile-elem-link">
-                    <img :src="userProfile.userAvatar" alt="" class="user-avatar">
+                    <div class="user-avatar"><img :src="userProfile.userAvatar" alt=""></div>
                     <div class="user-info">
                         <div class="user-name">{{ userProfile.userName }}</div>
                         <div class="user-id">@{{ userProfile.userId }}</div>
@@ -137,11 +137,13 @@ const props = defineProps([
     margin-top: 30px;
     flex: 1 1 100%;
     padding-left: 0;
+
     div {
         &.profile-elem-link {
             max-height: 30px;
         }
     }
+
     li {
         cursor: pointer;
         display: flex;
@@ -150,6 +152,7 @@ const props = defineProps([
         margin: 15px 0;
         width: 100%;
         max-height: 30px;
+
         svg {
             width: 30px;
             height: 30px;
@@ -208,15 +211,23 @@ const props = defineProps([
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
+    overflow: hidden;
+
+    img {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
 }
 
 .user-info {
     flex: 1 1 100%;
+    margin-left: 10px;
 }
 
 .user-name {
+    white-space: nowrap;
     font-weight: 700;
     margin-bottom: 3px;
     color: var(--white);
@@ -225,4 +236,5 @@ const props = defineProps([
 .user-id {
     letter-spacing: -0.017em;
     color: var(--dark6);
-}</style>
+}
+</style>

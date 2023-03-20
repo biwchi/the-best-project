@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "firebase": "^9.18.0",
+    "firebaseui": "^6.0.2",
     "sass": "^1.58.3",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",

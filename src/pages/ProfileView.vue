@@ -37,6 +37,14 @@
         <div class="profile-buttons">
             <button class="prifle-btn-tweets active">Tweets</button>
             <button class="prifle-btn-media">Media</button>
+            <!-- <button @click="$router.replace({
+                name: 'NotFound',
+                // preserve current path and remove the first char to avoid the target URL starting with `//`
+                params: { pathMatch: $route.path.substring(1).split('/') },
+                // preserve existing query and hash if any
+                query: $route.query,
+                hash: $route.hash,
+            })">test</button> -->
         </div>
         <div class="profile-tweets">
             <Post v-for="(post, idx) in postsData" :key="idx" :userProfile="userProfile" :postData="post" />
@@ -66,6 +74,7 @@ import { ref, onMounted, watch } from "vue"
 import Post from "../components/Post.vue";
 import { db } from "../firebase/config"
 import { collection, onSnapshot, updateDoc, doc, getDocs } from "firebase/firestore";
+import { useRoute } from "vue-router";
 const postsData = ref([])
 const userProfile = ref({})
 const openPopUp = ref(false)
@@ -90,11 +99,13 @@ onMounted(async () => {
                     "retweet": doc.data().retweet,
                     "share": doc.data().share,
                     "commentsCount": doc.data().commentsCount,
-                    "comments": doc.data().comments
+                    "comments": doc.data().comments,
+                    "postLifeTime": doc.data().postLifeTime
                 }
                 fbposts.push(post)
             })
-            postsData.value = fbposts
+            postsData.value = fbposts.sort((post, post1) => post1.postLifeTime - post.postLifeTime, 0)
+            console.log(postsData.value)
         })
         onSnapshot(collection(db, "users"), (querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -147,7 +158,8 @@ watch(userAvatarFile, async () => {
     })
 })
 
-
+const { params: routeParams } = useRoute()
+console.log(routeParams.userId)
 
 
 </script>
