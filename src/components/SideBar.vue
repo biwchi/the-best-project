@@ -1,8 +1,23 @@
 <script setup>
+import { ref } from 'vue';
 import ExploredIcon from "../assets/Icons/ExploredIcon.vue"
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/config"
+import { useRouter } from 'vue-router';
 const props = defineProps([
     "userProfile"
 ])
+const router = useRouter()
+const popupOpened = ref(false)
+
+const logOut = () => {
+    signOut(auth).then(() => {
+        router.replace({ path: "/auth" })
+    })
+        .catch((error) => {
+            alert(error.message)
+        })
+}
 </script>
 
 <template>
@@ -76,7 +91,7 @@ const props = defineProps([
                     Lists
                 </span>
             </li>
-            <RouterLink :to="{ name: 'profile', params: { userId: userProfile.id || '0' } }" custom v-slot="{ navigate }">
+            <RouterLink :to="{ name: 'profile', params: { userId: userProfile.uid || '0' } }" custom v-slot="{ navigate }">
                 <div @click="navigate" class="profile-elem-link">
                     <li>
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +121,7 @@ const props = defineProps([
             <button class="tweet-btn">Tweet</button>
         </ul>
         <div class="profile-elem">
-            <RouterLink :to="{ name: 'profile', params: { userId: userProfile.id || '0' } }" custom v-slot="{ navigate }">
+            <RouterLink :to="{ name: 'profile', params: { userId: userProfile.uid || '0' } }" custom v-slot="{ navigate }">
                 <div @click="navigate" class="profile-elem-link">
                     <div class="user-avatar"><img :src="userProfile.userAvatar" alt=""></div>
                     <div class="user-info">
@@ -115,7 +130,13 @@ const props = defineProps([
                     </div>
                 </div>
             </RouterLink>
-            <div class="dots"><img src="../assets/images/sidebar/dots-settings.svg" alt=""></div>
+            <div @click="popupOpened = !popupOpened" class="dots">
+                <ul v-show="popupOpened" class="dots-popup">
+                    <li @click="logOut">Log out</li>
+                    <li>Edit profile</li>
+                </ul>
+                <img src="../assets/images/sidebar/dots-settings.svg" alt="">
+            </div>
         </div>
     </div>
 </template>
@@ -127,6 +148,7 @@ const props = defineProps([
     display: flex;
     height: 100%;
     flex-direction: column;
+    width: 270px;
 }
 
 .logo {
@@ -208,16 +230,13 @@ const props = defineProps([
 }
 
 .user-avatar {
-    height: 40px;
-    width: 40px;
+    width: 100%;
     border-radius: 50%;
     overflow: hidden;
-
     img {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        object-fit: fill;
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
     }
 }
 
@@ -237,4 +256,32 @@ const props = defineProps([
     letter-spacing: -0.017em;
     color: var(--dark6);
 }
-</style>
+
+.dots {
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+
+    &-popup {
+        list-style-type: none;
+        position: absolute;
+        top: -80px;
+        right: 10px;
+        transform: translateX(50%);
+        background-color: var(--dark3);
+        padding: 10px;
+        border-radius: 5px;
+
+        li {
+            cursor: pointer;
+            transition: 0.2s ease;
+            padding: 5px 0;
+            white-space: nowrap;
+            color: var(--white);
+
+            &:hover {
+                color: var(--main-blue);
+            }
+        }
+    }
+}</style>

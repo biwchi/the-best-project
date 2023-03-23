@@ -6,22 +6,21 @@
     align-items: center;
     &__body {
         color: var(--white);
-        padding: 50px 40px 30px 40px;
+        padding: 50px 30px 40px 30px;
         border-radius: 20px;
-        background-color: var(--dark3);
-        height: 700px;
-        width: 600px;
+        background-color: var(--dark2);
     }
     &__content {
         margin: 0 auto;
-        width: 400px;
+        width: 350px;
         display: flex;
         flex-direction: column;
         align-items: center;
         height: 100%;
     }
-    &__btn-close {
-        text-align: right;
+    &__logo {
+        margin-bottom: 20px;
+        text-align: center;
         svg {
             path {
                 fill: var(--main-blue);
@@ -30,42 +29,79 @@
     }
 
     &__title {
-        font-size: 30px;
+        font-size: 22px;
         font-weight: 700;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
     }
 
     &__form {
+        width: 100%;
         display: flex;
         flex-direction: column;
     }
 
     &__input-box {
-        border: 1px solid #4e7698;
-        border-radius: 5px;
-        margin-bottom: 25px;
+        border-radius: 9999px;
+        background-color: var(--dark3);
+        margin-bottom: 20px;
         input {
             color: var(--white);
-            font-size: 25px;
-            padding: 15px 10px;
+            font-size: 18px;
+            padding: 10px 20px;
+            width: 100%;
             background-color: transparent;
             &::placeholder {
-                color: #4e7698;
+                color: var(--dark6);
             }
         }
     }
     &__button {
         width: 100%;
-        margin-top: 20px;
         display: flex;
         justify-content: center;
     }
     &__submit {
+        background-color: var(--main-blue);
+        color: var(--white);
         font-weight: 700;
         display: inline-block;
         font-size: 18px;
         width: 100%;
         padding: 10px 20px;
-        border-radius: 20px;
+        border-radius: 9999px;
+    }
+    &__options {
+        margin: 15px 0 0 0;
+        display: flex;
+        justify-content: center;
+        list-style-type: none;
+    }
+    &__option {
+        cursor: pointer;
+        color: var(--white);
+        font-size: 14px;
+        margin-right: 15px;
+        position: relative;
+        transition: .2s ease;
+        &::after {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: var(--white);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -9px;
+        }
+        &:hover {
+            color: var(--main-blue);
+        }
+        &:last-child {
+            margin: 0;
+            &::after {
+                display: none;
+            }
+        }
     }
 }

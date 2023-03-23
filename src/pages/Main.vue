@@ -19,7 +19,7 @@ onMounted(async () => {
     const users = await getDocs(collection(db, "users"))
     users.forEach(doc => {
         const user = {
-            "id": doc.id,
+            "uid": doc.data().uid,
             "userName": doc.data().userName,
             "userId": doc.data().userId,
             "userAvatar": doc.data().userAvatar,

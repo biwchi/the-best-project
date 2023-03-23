@@ -9,12 +9,13 @@ const userProfile = ref({})
 onMounted(async () => {
     const users = await getDocs(collection(db, "users"))
     users.forEach(doc => {
+        posts.value = []
         onSnapshot(collection(db, "users", doc.id, "posts"), (querySnapshot) => {
             const fbposts = []
             querySnapshot.forEach((doc) => {
                 const post = {
                     "id": doc.id,
-                    "userName": doc.data().userName,
+                    "userName": doc.data().userName, 
                     "userId": doc.data().userId,
                     "content": doc.data().content,
                     "date": doc.data().date,
@@ -26,9 +27,10 @@ onMounted(async () => {
                     "comments": doc.data().comments,
                     "postLifeTime": doc.data().postLifeTime
                 }
-                fbposts.push(post)
+                posts.value.push(post)
             })
-            posts.value = fbposts.sort((post, post1) => post1.postLifeTime - post.postLifeTime, 0)
+            console.log(posts.value)
+            // posts.value = fbposts.sort((post, post1) => post1.postLifeTime - post.postLifeTime, 0)
         })
         onSnapshot(collection(db, "users"), (querySnapshot) => {
             querySnapshot.forEach((doc) => {

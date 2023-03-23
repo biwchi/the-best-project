@@ -14,13 +14,10 @@ async function deletePost(id) {
         deleteDoc(doc(db, "users", document.id, "posts", id))
         postSettingsShow.value = false
         updateDoc(doc(db, "users", document.id), {
-                userPostsCount: document.data().userPostsCount - 1
-            })
+            userPostsCount: document.data().userPostsCount - 1
+        })
     });
-
 }
-
-
 </script>
 
 <template>
@@ -82,4 +79,5 @@ async function deletePost(id) {
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
-}</style>
+}
+</style>
