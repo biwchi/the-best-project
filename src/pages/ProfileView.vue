@@ -40,7 +40,7 @@
             <button class="prifle-btn-media">Media</button>
         </div>
         <div class="profile-tweets">
-            <Post v-for="(post, idx) in postsData" :key="idx" :userProfile="userProfile" :postData="post" />
+            <Post v-for="(userPost, idx) in userPosts" :key="idx" :userProfile="userProfile" :postData="userPost" />
         </div>
         <Transition>
             <div class="edit-popup" v-show="openPopUp">
@@ -63,13 +63,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from "vue"
-import Post from "../components/Post.vue";
+import { ref, onMounted, watch } from "vue"
 import { db, auth } from "../firebase/config"
-import { collection, onSnapshot, updateDoc, doc, getDocs } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+import { collection, updateDoc, doc, getDoc, getDocs, query, onSnapshot, QuerySnapshot } from "firebase/firestore";
+import Post from "../components/Post.vue";
 import router from "../router/index"
-const postsData = ref([])
+const userPosts = ref([])
 const userProfile = ref({})
 const openPopUp = ref(false)
 const userAvatar = ref("")
@@ -77,49 +76,43 @@ const userAvatarFile = ref("")
 const userBackground = ref("")
 const userBackgroundFile = ref("")
 onMounted(async () => {
-    const users = await getDocs(collection(db, "users"))
-    onAuthStateChanged(auth, (user) => {
-        onSnapshot(collection(db, "users", user.uid, "posts"), (querySnapshot) => {
-        const fbposts = []
-        querySnapshot.forEach((doc) => {
-            const post = {
-                "id": doc.id,
-                "userName": doc.data().userName,
-                "userId": doc.data().userId,
-                "content": doc.data().content,
-                "date": doc.data().date,
-                "media": doc.data().media,
-                "likes": doc.data().likes,
-                "retweet": doc.data().retweet,
-                "share": doc.data().share,
-                "commentsCount": doc.data().commentsCount,
-                "comments": doc.data().comments,
-                "postLifeTime": doc.data().postLifeTime
+    const userProfilePostsRef = query(collection(db, "users", auth.currentUser.uid, "posts"))
+    const getUserPosts = onSnapshot(userProfilePostsRef, (querySnapshot) => {
+        const arrUserPosts = []
+        querySnapshot.forEach((post) => {
+            const userPost = {
+                "id": post.id,
+                "userName": post.data().userName,
+                "userId": post.data().userId,
+                "content": post.data().content,
+                "date": post.data().date,
+                "media": post.data().media,
+                "likes": post.data().likes,
+                "retweet": post.data().retweet,
+                "share": post.data().share,
+                "commentsCount": post.data().commentsCount,
+                "comments": post.data().comments,
+                "postLifeTime": post.data().postLifeTime
             }
-            fbposts.push(post)
+            arrUserPosts.push(userPost)
         })
-        postsData.value = fbposts.sort((post, post1) => post1.postLifeTime - post.postLifeTime, 0)
+        userPosts.value = arrUserPosts.sort((post, post1) => post1.postLifeTime - post.postLifeTime, 0)
     })
-    onSnapshot(collection(db, "users"), (querySnapshot) => {
-        querySnapshot
-        querySnapshot.forEach((doc) => {
-            console.log(doc)
-            const currentUser = {
-                "uid": doc.data().uid,
-                "userName": doc.data().userName,
-                "userId": doc.data().userId,
-                "userAvatar": doc.data().userAvatar,
-                "userProfileBackground": doc.data().userProfileBackground,
-                "userLocation": doc.data().userLocation,
-                "userFollowing": doc.data().userFollowing,
-                "userFollowers": doc.data().userFollowers,
-                "userJoinDate": doc.data().userJoinDate,
-                "userPostsCount": doc.data().userPostsCount,
-            }
-            userProfile.value = user
-        })
-    })
-    })
+
+    const currentUserIs = await getDoc(doc(db, "users", auth.currentUser.uid))
+    const currentUser = {
+        "uid": currentUserIs.data().uid,
+        "userName": currentUserIs.data().userName,
+        "userId": currentUserIs.data().userId,
+        "userAvatar": currentUserIs.data().userAvatar,
+        "userProfileBackground": currentUserIs.data().userProfileBackground,
+        "userLocation": currentUserIs.data().userLocation,
+        "userFollowing": currentUserIs.data().userFollowing,
+        "userFollowers": currentUserIs.data().userFollowers,
+        "userJoinDate": currentUserIs.data().userJoinDate,
+        "userPostsCount": currentUserIs.data().userPostsCount,
+    }
+    userProfile.value = currentUser
 })
 
 function changeAvatar(e) {
@@ -141,13 +134,13 @@ function changeBackground(e) {
 }
 
 watch(userBackgroundFile, async () => {
-    await updateDoc(doc(db, "users", userProfile.value.uid), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
         userProfileBackground: userBackgroundFile.value
     })
 })
 
 watch(userAvatarFile, async () => {
-    await updateDoc(doc(db, "users", userProfile.value.uid), {
+    await updateDoc(doc(db, "users", auth.currentUser.uid), {
         userAvatar: userAvatarFile.value,
     })
 })

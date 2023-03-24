@@ -1,5 +1,5 @@
 <script setup>
-import { ref, } from "vue"
+import { ref } from "vue"
 import { db } from "../firebase/config"
 import { deleteDoc, getDocs, collection, doc, updateDoc } from "firebase/firestore";
 const postLiked = ref(false)

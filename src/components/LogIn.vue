@@ -42,11 +42,9 @@ const password = ref("")
 const logIn = () => {
     signInWithEmailAndPassword(auth, email.value, password.value)
         .then((userIn) => {
-            console.log(auth.currentUser)
         })
         .catch((error) => {
             alert(error.message)
-            console.log(currentUser)
         })
 }
 </script>

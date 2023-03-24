@@ -9,29 +9,27 @@
 
 <script setup>
 import SideBar from "../components/SideBar.vue"
-import { db } from "../firebase/config"
-import { collection, getDocs, onSnapshot, deleteDoc, updateDoc, doc, addDoc } from "firebase/firestore";
+import { db, auth } from "../firebase/config"
+import { doc, getDoc } from "firebase/firestore";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter()
 const userProfile = ref([])
-onMounted(async () => {
-    const users = await getDocs(collection(db, "users"))
-    users.forEach(doc => {
-        const user = {
-            "uid": doc.data().uid,
-            "userName": doc.data().userName,
-            "userId": doc.data().userId,
-            "userAvatar": doc.data().userAvatar,
-            "userProfileBackground": doc.data().userProfileBackground,
-            "userLocation": doc.data().userLocation,
-            "userFollowing": doc.data().userFollowing,
-            "userFollowers": doc.data().userFollowers,
-            "userJoinDate": doc.data().userJoinDate,
-            "userPostsCount": doc.data().userPostsCount,
+onMounted( async () => {
+        const userIs = await getDoc(doc(db, "users", auth.currentUser.uid))
+        const currentUser = {
+            "uid": userIs.data().uid,
+            "userName": userIs.data().userName,
+            "userId":userIs.data().userId,
+            "userAvatar": userIs.data().userAvatar,
+            "userProfileBackground": userIs.data().userProfileBackground,
+            "userLocation": userIs.data().userLocation,
+            "userFollowing": userIs.data().userFollowing,
+            "userFollowers": userIs.data().userFollowers,
+            "userJoinDate": userIs.data().userJoinDate,
+            "userPostsCount": userIs.data().userPostsCount,
         }
-        userProfile.value = user
-    });
+        userProfile.value = currentUser
 })
 </script>
 
